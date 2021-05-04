@@ -1,40 +1,34 @@
-import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MainLayout from '../MainLayout/MainLayout';
-import PageAddFilm from '../PageAddFilm/PageAddFilm';
-import PageFilmDetails from '../PageFilmDetails/PageFilmDetails';
-import PageFilms from '../PageFilms/PageFilms';
-import PageImportFilms from '../PageImportFilms/PageImportFilms';
+import PageAddFilm from '../pages/PageAddFilm/PageAddFilm';
+import PageFilmDetails from '../pages/PageFilmDetails/PageFilmDetails';
+import PageFilms from '../pages/PageFilms/PageFilms';
+import PageImportFilms from '../pages/PageImportFilms/PageImportFilms';
+import PageNotFound from '../pages/PageNotFound/PageNotFound';
 
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route path='/'>
-          <MainLayout>
-            <Route exact path='/'>
-              <PageFilms />
-            </Route>
-            <Route exact path='/add-film'>
-              <PageAddFilm />
-            </Route>
-            <Route exact path={['/films/:id(\\d+)']}>
-              <PageFilmDetails />
-            </Route>
-
-            <Route exact path='/import-films'>
-              <PageImportFilms />
-            </Route>
-            {/* <Route exact path='/admin/order/:id'>
-              <PageOrder />
-            </Route>
-            <Route exact path='/admin/products'>
-              <PageProductImport />
-            </Route> */}
-          </MainLayout>
-        </Route>
-      </Switch>
+      <MainLayout>
+        <Switch>
+          <Route exact path='/'>
+            <PageFilms />
+          </Route>
+          <Route exact path='/add-film'>
+            <PageAddFilm />
+          </Route>
+          <Route exact path={['/films/:id(\\d+)']}>
+            <PageFilmDetails />
+          </Route>
+          <Route exact path='/import-films'>
+            <PageImportFilms />
+          </Route>
+          <Route>
+            <PageNotFound />
+          </Route>
+        </Switch>
+      </MainLayout>
     </Router>
   );
 }

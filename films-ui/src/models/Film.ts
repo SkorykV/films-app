@@ -1,15 +1,5 @@
 import { Type } from 'class-transformer';
-import {
-  IsArray,
-  IsIn,
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  Length,
-  ValidateIf,
-  ValidateNested,
-} from 'class-validator';
-import * as Yup from 'yup';
+import { IsArray, IsIn, IsInt, Length, ValidateNested } from 'class-validator';
 
 import { FILM_FORMAT } from '../types/film-format.enum';
 import { Actor, CreateActorDTO } from './Actor';

@@ -2,9 +2,9 @@ import { Button, makeStyles, TextField, Typography } from '@material-ui/core';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React from 'react';
-import { API_HOST } from '../../../constants/api';
-import { getValidator } from '../../../helpers/validation';
-import { CreateFilmWithActorsDTO } from '../../../models/Film';
+import { API_HOST } from '../../../../constants/api';
+import { getValidator } from '../../../../helpers/validation';
+import { CreateFilmWithActorsDTO } from '../../../../models/Film';
 import ActorsField from './ActorsField/ActorsField';
 
 const useStyles = makeStyles(theme => ({

@@ -1,8 +1,8 @@
 import { Button, Chip, makeStyles, TextField } from '@material-ui/core';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
-import { getValidator } from '../../../../helpers/validation';
-import { CreateActorDTO } from '../../../../models/Actor';
+import React from 'react';
+import { getValidator } from '../../../../../helpers/validation';
+import { CreateActorDTO } from '../../../../../models/Actor';
 
 const useStyles = makeStyles(theme => ({
   form: {

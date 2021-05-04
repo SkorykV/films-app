@@ -64,8 +64,13 @@ const Header: React.FC = () => {
             aria-labelledby='main navigation'
             className={classes.navDisplayFlex}
           >
-            {navLinks.map(({ title, path }) => (
-              <ListItem component={Link} to={path} className={classes.linkText}>
+            {navLinks.map(({ title, path }, index) => (
+              <ListItem
+                key={index}
+                component={Link}
+                to={path}
+                className={classes.linkText}
+              >
                 <ListItemText
                   primary={title}
                   primaryTypographyProps={{ noWrap: true }}

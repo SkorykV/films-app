@@ -1,8 +1,8 @@
 import { Button, Grid, TextField } from '@material-ui/core';
 import { useFormik } from 'formik';
 import React from 'react';
-import { getValidator } from '../../../helpers/validation';
-import { FilterFilmsDTO } from '../../../models/Film';
+import { getValidator } from '../../../../helpers/validation';
+import { FilterFilmsDTO } from '../../../../models/Film';
 
 const FilterFilmsForm: React.FC<{
   disabled: boolean;

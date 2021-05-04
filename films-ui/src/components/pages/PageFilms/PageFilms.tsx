@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import Films from './Films/Films';
 import axios from 'axios';
-import { API_HOST } from '../../constants/api';
-import { Film, FilterFilmsDTO } from '../../models/Film';
+import { API_HOST } from '../../../constants/api';
+import { Film, FilterFilmsDTO } from '../../../models/Film';
 import FilterFilmsForm from './FilterFilmsForm/FilterFilmsForm';
 
 const useStyles = makeStyles(theme => ({

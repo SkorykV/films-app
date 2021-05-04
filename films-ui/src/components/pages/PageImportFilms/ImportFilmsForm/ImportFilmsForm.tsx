@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import { API_HOST } from '../../../constants/api';
+import { API_HOST } from '../../../../constants/api';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -40,13 +40,13 @@ const ImportFilmsForm: React.FC = () => {
       try {
         const formData = new FormData();
         formData.append('file', values.file);
-        await axios.post(`${API_HOST}/films/parse`, formData, {
+        const res = await axios.post(`${API_HOST}/films/parse`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-        alert(`Your file was successfully parsed!`);
-        filmsImportForm.resetForm();
+        alert(`Your file was parsed! ${res.data.created} new films added`);
+        //filmsImportForm.resetForm();
       } catch (error) {
         alert('Something went wrong');
       }
@@ -78,7 +78,7 @@ const ImportFilmsForm: React.FC = () => {
               id='file'
               name='file'
               type='file'
-              onChange={async event => {
+              onChange={event => {
                 filmsImportForm.setFieldValue(
                   'file',
                   event.currentTarget.files && event.currentTarget.files[0]

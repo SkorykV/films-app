@@ -2,13 +2,7 @@ import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import {
-  Avatar,
-  IconButton,
-  ListItemAvatar,
-  ListItemIcon,
-  ListItemSecondaryAction,
-} from '@material-ui/core';
+import { ListItemIcon } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import LocalMoviesIcon from '@material-ui/icons/LocalMovies';
 // TODO: any
@@ -23,7 +17,7 @@ function FilmListItem(props: any) {
       e.preventDefault();
       onFilmDelete(film.id);
     },
-    [film.id]
+    [onFilmDelete, film.id]
   );
 
   return (

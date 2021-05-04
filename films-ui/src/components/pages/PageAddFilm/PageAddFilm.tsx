@@ -1,4 +1,4 @@
-import { Container, makeStyles, Paper } from '@material-ui/core';
+import { Container, makeStyles } from '@material-ui/core';
 import React from 'react';
 import FilmForm from './FilmForm/FilmForm';
 

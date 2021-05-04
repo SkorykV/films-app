@@ -1,6 +1,6 @@
 import { Paper, Typography, Grid, makeStyles } from '@material-ui/core';
 import React from 'react';
-import { Film, FilmDetails as FilmDetailsData } from '../../../models/Film';
+import { FilmDetails as FilmDetailsData } from '../../../../models/Film';
 
 const useStyles = makeStyles(theme => ({
   title: {
