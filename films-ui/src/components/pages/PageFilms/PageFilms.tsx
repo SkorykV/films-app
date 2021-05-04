@@ -44,10 +44,8 @@ const PageFilms: React.FC = () => {
     const res = await axios.get(`${API_HOST}/films`, {
       params,
     });
-    setTimeout(() => {
-      setFilms(res.data);
-      setLoading(false);
-    }, 500);
+    setFilms(res.data);
+    setLoading(false);
   };
 
   const handleDeleteFilm = (id: number) => {

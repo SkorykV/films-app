@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Film } from '../../../../models/Film';
 
 import { FixedSizeList } from 'react-window';
-import FilmListItem from './FilmListItem/FilmListItem';
+import FilmListItem, { FilmListItemData } from './FilmListItem/FilmListItem';
 import CenteredLoader from '../../../CenteredLoader/CenteredLoader';
 import { Paper, Typography } from '@material-ui/core';
 
@@ -49,7 +49,7 @@ export default function Films({
       ) : (
         <AutoSizer>
           {({ height, width }) => (
-            <FixedSizeList
+            <FixedSizeList<FilmListItemData>
               height={height}
               width={width}
               itemSize={46}

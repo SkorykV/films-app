@@ -46,9 +46,8 @@ const ImportFilmsForm: React.FC = () => {
           },
         });
         alert(`Your file was parsed! ${res.data.created} new films added`);
-        //filmsImportForm.resetForm();
       } catch (error) {
-        alert('Something went wrong');
+        alert(error.response.data?.message);
       }
     },
   });

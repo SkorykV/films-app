@@ -1,14 +1,26 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { ListItemIcon } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import LocalMoviesIcon from '@material-ui/icons/LocalMovies';
-// TODO: any
-function FilmListItem(props: any) {
-  const { index, style, data } = props;
+import { Film } from '../../../../../models/Film';
 
+export interface FilmListItemData {
+  films: Film[];
+  onFilmDelete: (id: number) => void;
+}
+
+function FilmListItem({
+  index,
+  style,
+  data,
+}: {
+  index: number;
+  style: CSSProperties;
+  data: FilmListItemData;
+}) {
   const { films, onFilmDelete } = data;
   const film = films[index];
 

@@ -1,5 +1,8 @@
-import { Paper, Typography, Grid, makeStyles } from '@material-ui/core';
-import React from 'react';
+import { Paper, Typography, Grid, makeStyles, Button } from '@material-ui/core';
+import axios from 'axios';
+import React, { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
+import { API_HOST } from '../../../../constants/api';
 import { FilmDetails as FilmDetailsData } from '../../../../models/Film';
 
 const useStyles = makeStyles(theme => ({
@@ -23,12 +26,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const FilmDetails: React.FC<FilmDetailsData> = ({
+  id,
   title,
   releaseYear,
   format,
   stars,
 }: FilmDetailsData) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleDelete = useCallback(() => {
+    axios.delete(`${API_HOST}/films/${id}`).then(() => {
+      history.push('/');
+    });
+  }, [id, history]);
+
   return (
     <Paper>
       <Typography align='center' variant='h4' className={classes.title}>
@@ -51,6 +63,9 @@ const FilmDetails: React.FC<FilmDetailsData> = ({
               .map(({ firstName, lastName }) => `${firstName} ${lastName}`)
               .join(', ')}
           </Typography>
+          <Button variant='outlined' color='secondary' onClick={handleDelete}>
+            Delete
+          </Button>
         </Grid>
       </Grid>
     </Paper>

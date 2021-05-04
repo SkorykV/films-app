@@ -40,7 +40,7 @@ const FilmForm: React.FC = () => {
         alert(`Film "${values.title}" was successfully created!`);
         formik.resetForm();
       } catch (error) {
-        alert('Something went wrong');
+        alert(error.response.data?.message);
       }
     },
   });
