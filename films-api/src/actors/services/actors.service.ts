@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Actor } from '../repository/actor.entity';
 
 @Injectable()
-export class ActorsServiceService {
+export class ActorsService {
   public buildActorsMap(actors: Actor[]): Map<string, Actor> {
     const map = new Map<string, Actor>();
 

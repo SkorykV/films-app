@@ -8,7 +8,7 @@ import { CreateFilmWithActorsDTO } from '../dto/create-film-with-actors.dto';
 import { Connection } from 'typeorm';
 import { Actor } from 'src/actors/repository/actor.entity';
 import { CreateActorDTO } from 'src/actors/dto/create-actor.dto';
-import { ActorsServiceService } from 'src/actors/services/actors-service.service';
+import { ActorsService } from 'src/actors/services/actors.service';
 import { getFullName } from 'src/shared/helpers/name';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class FilmsService {
   constructor(
     private readonly filmRepository: FilmRepository,
     private readonly actorRepository: ActorRepository,
-    private readonly actorsService: ActorsServiceService,
+    private readonly actorsService: ActorsService,
     private readonly connection: Connection,
   ) {}
 

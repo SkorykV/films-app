@@ -11,7 +11,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CreateFilmDTO } from './dto/create-film.dto';
 import { FilmsService } from './services/films.service';
 import * as multer from 'multer';
 import { Film } from './repository/film.entity';
@@ -54,7 +53,7 @@ export class FilmsController {
       storage: multer.memoryStorage(),
     }),
   )
-  async uploadFileNew(@UploadedFile() file: Express.Multer.File) {
+  async createFilmsFromFile(@UploadedFile() file: Express.Multer.File) {
     const createFilmWithActorsDTOs = await this.filmsParserService.parseFilmsFromBuffer(
       file.buffer,
     );

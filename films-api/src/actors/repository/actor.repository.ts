@@ -12,12 +12,7 @@ export class ActorRepository extends Repository<Actor> {
       .onConflict(`("firstName", "lastName") DO NOTHING`)
       .execute();
 
-    return this.find({
-      where: {
-        firstName: In(actorDTOs.map((actor) => actor.firstName)),
-        lastName: In(actorDTOs.map((actor) => actor.lastName)),
-      },
-    });
+    return this.findActors(actorDTOs);
   }
 
   async findActors(actorDTOs: CreateActorDTO[]): Promise<Actor[]> {
