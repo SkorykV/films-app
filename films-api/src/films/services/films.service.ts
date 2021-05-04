@@ -62,8 +62,10 @@ export class FilmsService {
     );
   }
 
-  async createManyFilms(createFilmWithActorDTOs: CreateFilmWithActorsDTO[]) {
-    await this.connection.transaction(async (manager) => {
+  async createManyFilms(
+    createFilmWithActorDTOs: CreateFilmWithActorsDTO[],
+  ): Promise<number> {
+    return await this.connection.transaction(async (manager) => {
       const actorRepository = manager.getCustomRepository(ActorRepository);
       const filmRepository = manager.getCustomRepository(FilmRepository);
 
@@ -87,6 +89,8 @@ export class FilmsService {
         );
         await filmRepository.addStars(filmDTO.id, filmActors);
       }
+
+      return insertedFilms.length;
     });
   }
 

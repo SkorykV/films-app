@@ -55,16 +55,13 @@ export class FilmsController {
     }),
   )
   async uploadFileNew(@UploadedFile() file: Express.Multer.File) {
-    const start = process.hrtime();
     const createFilmWithActorsDTOs = await this.filmsParserService.parseFilmsFromBuffer(
       file.buffer,
     );
-    await this.filmsService.createManyFilms(createFilmWithActorsDTOs);
+    const insertedFilmsCount = await this.filmsService.createManyFilms(
+      createFilmWithActorsDTOs,
+    );
 
-    const passedTime = process.hrtime(start);
-
-    return `Execution time (hr): ${passedTime[0]}s ${
-      passedTime[1] / 1000000
-    }ms`;
+    return { created: insertedFilmsCount };
   }
 }
