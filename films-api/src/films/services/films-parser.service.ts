@@ -29,7 +29,10 @@ export class FilmsParserService {
     }
 
     const filmDTO = plainToClass(CreateFilmWithActorsDTO, plainfilmDTO);
-    const errors = await validate(filmDTO);
+    const errors = await validate(filmDTO, {
+      forbidNonWhitelisted: true,
+      whitelist: true,
+    });
     if (errors.length > 0) {
       throw new InputError('File has incorrect format');
     }
@@ -58,7 +61,7 @@ export class FilmsParserService {
         });
         return ['stars', actors];
       default:
-        throw new Error('Unexpected Film field in raw data');
+        throw new InputError('File has incorrect format');
     }
   }
 }
