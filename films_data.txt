@@ -94,7 +94,7 @@ Format: DVD
 Stars: Tom Cruise, Kelly McGillis, Val Kilmer, Anthony Edwards, Tom Skerritt
 
 Title: MASH
-Release Year: 1970 
+Release Year: 1970
 Format: DVD
 Stars: Donald Sutherland, Elliot Gould, Tom Skerritt, Sally Kellerman, Robert Duvall
 
@@ -104,9 +104,9 @@ Format: VHS
 Stars: Carl Reiner, Eva Marie Saint, Alan Arkin, Brian Keith
 
 Title: Jaws
-Release Year: 1975 
+Release Year: 1975
 Format: DVD
-Stars: Roy Scheider, Robert Shaw, Richard Dreyfuss, Lorraine Gary 
+Stars: Roy Scheider, Robert Shaw, Richard Dreyfuss, Lorraine Gary
 
 Title: 2001: A Space Odyssey
 Release Year: 1968
@@ -114,7 +114,7 @@ Format: DVD
 Stars: Keir Dullea, Gary Lockwood, William Sylvester, Douglas Rain
 
 Title: Harvey
-Release Year: 1950 
+Release Year: 1950
 Format: DVD
 Stars: James Stewart, Josephine Hull, Peggy Dow, Charles Drake
 
