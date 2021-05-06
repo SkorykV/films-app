@@ -6,9 +6,6 @@ import { API_HOST } from '../../../../constants/api';
 import { FilmDetails as FilmDetailsData } from '../../../../models/Film';
 
 const useStyles = makeStyles(theme => ({
-  title: {
-    textTransform: 'uppercase',
-  },
   posterContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -43,7 +40,7 @@ const FilmDetails: React.FC<FilmDetailsData> = ({
 
   return (
     <Paper>
-      <Typography align='center' variant='h4' className={classes.title}>
+      <Typography align='center' variant='h4'>
         {title}
       </Typography>
       <Grid container spacing={2}>
