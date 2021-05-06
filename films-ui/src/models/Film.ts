@@ -1,5 +1,13 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsIn, IsInt, Length, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsIn,
+  IsInt,
+  Length,
+  Max,
+  Min,
+  ValidateNested,
+} from 'class-validator';
 
 import { FILM_FORMAT } from '../types/film-format.enum';
 import { Actor, CreateActorDTO } from './Actor';
@@ -19,6 +27,9 @@ export class CreateFilmDTO {
   @Length(3, 100)
   title!: string;
 
+  // release year of the first film
+  @Min(1888)
+  @Max(new Date().getFullYear())
   @IsInt()
   releaseYear!: number;
 
