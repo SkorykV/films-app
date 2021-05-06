@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useFormik } from 'formik';
 import axios from 'axios';
@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 const ImportFilmsForm: React.FC = () => {
   const classes = useStyles();
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const filmsImportForm = useFormik<{ file: File | string }>({
     initialValues: {
@@ -40,12 +41,19 @@ const ImportFilmsForm: React.FC = () => {
       try {
         const formData = new FormData();
         formData.append('file', values.file);
-        const res = await axios.post(`${API_HOST}/films/parse`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        alert(`Your file was parsed! ${res.data.created} new films added`);
+        try {
+          const res = await axios.post(`${API_HOST}/films/parse`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          alert(`Your file was parsed! ${res.data.created} new films added`);
+        } finally {
+          filmsImportForm.resetForm();
+          if (fileInput.current) {
+            fileInput.current.value = '';
+          }
+        }
       } catch (error) {
         alert(error.response.data?.message);
       }
@@ -77,6 +85,7 @@ const ImportFilmsForm: React.FC = () => {
               id='file'
               name='file'
               type='file'
+              ref={fileInput}
               onChange={event => {
                 filmsImportForm.setFieldValue(
                   'file',
