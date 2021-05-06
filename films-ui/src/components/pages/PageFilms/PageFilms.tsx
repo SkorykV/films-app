@@ -23,7 +23,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const PageFilms: React.FC = () => {
+const PageFilms: React.FC<{ onNotificationAdd: (message: string) => void }> = ({
+  onNotificationAdd,
+}: {
+  onNotificationAdd: (message: string) => void;
+}) => {
   const classes = useStyles();
 
   const [isLoading, setLoading] = useState(true);
@@ -50,7 +54,13 @@ const PageFilms: React.FC = () => {
 
   const handleDeleteFilm = (id: number) => {
     axios.delete(`${API_HOST}/films/${id}`).then(() => {
-      setFilms(films.filter(film => film.id !== id));
+      const deletedFilm = films.find(film => film.id === id);
+      if (deletedFilm) {
+        setFilms(films.filter(film => film.id !== id));
+        onNotificationAdd(
+          `Film "${deletedFilm.title}" was successfully deleted`
+        );
+      }
     });
   };
 

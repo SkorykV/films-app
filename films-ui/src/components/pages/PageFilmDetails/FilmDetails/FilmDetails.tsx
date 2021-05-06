@@ -22,21 +22,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const FilmDetails: React.FC<FilmDetailsData> = ({
+interface FilmDetailsProps extends FilmDetailsData {
+  onNotificationAdd: (message: string) => void;
+}
+
+const FilmDetails: React.FC<FilmDetailsProps> = ({
   id,
   title,
   releaseYear,
   format,
   stars,
-}: FilmDetailsData) => {
+  onNotificationAdd,
+}: FilmDetailsProps) => {
   const classes = useStyles();
   const history = useHistory();
 
   const handleDelete = useCallback(() => {
     axios.delete(`${API_HOST}/films/${id}`).then(() => {
       history.push('/');
+      onNotificationAdd(`Film "${title}" was successfully deleted`);
     });
-  }, [id, history]);
+  }, [id, title, history, onNotificationAdd]);
 
   return (
     <Paper>

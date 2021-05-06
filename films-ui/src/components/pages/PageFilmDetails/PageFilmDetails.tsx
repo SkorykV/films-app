@@ -6,7 +6,13 @@ import { FilmDetails as FilmsDetailsData } from '../../../models/Film';
 import FilmDetails from './FilmDetails/FilmDetails';
 import CenteredLoader from '../../CenteredLoader/CenteredLoader';
 
-const PageFilmDetails: React.FC = () => {
+const PageFilmDetails: React.FC<{
+  onNotificationAdd: (message: string) => void;
+}> = ({
+  onNotificationAdd,
+}: {
+  onNotificationAdd: (message: string) => void;
+}) => {
   const { id } = useParams<{ id: string }>();
 
   const history = useHistory();
@@ -20,7 +26,13 @@ const PageFilmDetails: React.FC = () => {
   }, [id, history]);
 
   return (
-    <>{filmDetails ? <FilmDetails {...filmDetails} /> : <CenteredLoader />}</>
+    <>
+      {filmDetails ? (
+        <FilmDetails onNotificationAdd={onNotificationAdd} {...filmDetails} />
+      ) : (
+        <CenteredLoader />
+      )}
+    </>
   );
 };
 
