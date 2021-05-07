@@ -5,26 +5,27 @@ import { getValidator } from '../../../../helpers/validation';
 import { FilterFilmsDTO } from '../../../../models/Film';
 
 const FilterFilmsForm: React.FC<{
-  disabled: boolean;
-  onSubmit: (filters: FilterFilmsDTO) => void;
+  shouldResetOnClearing: boolean;
+  onSubmit: (filters: FilterFilmsDTO) => Promise<void>;
+  onReset: () => Promise<void>;
 }> = ({
+  shouldResetOnClearing,
   onSubmit,
-  disabled,
+  onReset,
 }: {
-  disabled: boolean;
-  onSubmit: (filters: FilterFilmsDTO) => void;
+  shouldResetOnClearing: boolean;
+  onSubmit: (filters: FilterFilmsDTO) => Promise<void>;
+  onReset: () => Promise<void>;
 }) => {
-  const [wasSubmited, setWasSubmited] = useState(false);
-
+  const [isReseting, setReseting] = useState(false);
   const handleSubmit = useCallback(
-    (filters: FilterFilmsDTO) => {
-      if (!wasSubmited) {
-        setWasSubmited(true);
+    async (filters: FilterFilmsDTO) => {
+      if (isReseting) {
+        return;
       }
-
-      onSubmit(filters);
+      await onSubmit(filters);
     },
-    [wasSubmited, onSubmit]
+    [isReseting, onSubmit]
   );
 
   const formik = useFormik({
@@ -37,19 +38,28 @@ const FilterFilmsForm: React.FC<{
   });
 
   const onFormFieldChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       const updatedValues = { ...formik.values, [name]: value };
-      if (wasSubmited && !updatedValues.title && !updatedValues.actorName) {
-        onSubmit(updatedValues);
+      if (
+        shouldResetOnClearing &&
+        !(formik.isSubmitting || isReseting) &&
+        !updatedValues.title &&
+        !updatedValues.actorName
+      ) {
+        setReseting(true);
+        formik.resetForm();
+        await onReset();
+        setReseting(false);
       }
+
       formik.handleChange(e);
     },
-    [wasSubmited, formik, onSubmit]
+    [shouldResetOnClearing, isReseting, formik, onReset]
   );
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit} key='search'>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={5}>
           <TextField
@@ -58,10 +68,10 @@ const FilterFilmsForm: React.FC<{
             name='title'
             label='Title'
             value={formik.values.title}
+            disabled={formik.isSubmitting}
             onChange={onFormFieldChange}
             error={formik.touched.title && Boolean(formik.errors.title)}
             helperText={formik.touched.title && formik.errors.title}
-            disabled={disabled}
           />
         </Grid>
         <Grid item xs={12} sm={5}>
@@ -71,10 +81,10 @@ const FilterFilmsForm: React.FC<{
             name='actorName'
             label='Actor Name'
             value={formik.values.actorName}
+            disabled={formik.isSubmitting}
             onChange={onFormFieldChange}
             error={formik.touched.actorName && Boolean(formik.errors.actorName)}
             helperText={formik.touched.actorName && formik.errors.actorName}
-            disabled={disabled}
           />
         </Grid>
         <Grid item xs={12} sm={2}>
@@ -82,7 +92,7 @@ const FilterFilmsForm: React.FC<{
             color='primary'
             variant='contained'
             type='submit'
-            disabled={disabled}
+            disabled={formik.isSubmitting || isReseting}
           >
             Search
           </Button>

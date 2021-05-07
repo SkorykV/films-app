@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import Films from './Films/Films';
 import axios from 'axios';
@@ -32,8 +32,9 @@ const PageFilms: React.FC<{ onNotificationAdd: (message: string) => void }> = ({
 
   const [isLoading, setLoading] = useState(true);
   const [films, setFilms] = useState<Film[]>([]);
+  const [searchApplied, setSearchApplied] = useState(false);
 
-  const loadFilms = async (filters?: FilterFilmsDTO) => {
+  const loadFilms = useCallback(async (filters?: FilterFilmsDTO) => {
     const params: any = {};
     let key: keyof FilterFilmsDTO;
     if (filters) {
@@ -50,7 +51,8 @@ const PageFilms: React.FC<{ onNotificationAdd: (message: string) => void }> = ({
     });
     setFilms(res.data);
     setLoading(false);
-  };
+    setSearchApplied(!!(filters?.title || filters?.actorName));
+  }, []);
 
   const handleDeleteFilm = (id: number) => {
     axios.delete(`${API_HOST}/films/${id}`).then(() => {
@@ -66,11 +68,18 @@ const PageFilms: React.FC<{ onNotificationAdd: (message: string) => void }> = ({
 
   useEffect(() => {
     loadFilms();
-  }, []);
+  }, [loadFilms]);
 
-  const handleFiltersChange = async (filters: FilterFilmsDTO) => {
-    await loadFilms(filters);
-  };
+  const handleFiltersChange = useCallback(
+    async (filters: FilterFilmsDTO) => {
+      await loadFilms(filters);
+    },
+    [loadFilms]
+  );
+
+  const handleFiltersReset = useCallback(async () => {
+    await loadFilms();
+  }, [loadFilms]);
 
   return (
     <div className={classes.content}>
@@ -78,7 +87,11 @@ const PageFilms: React.FC<{ onNotificationAdd: (message: string) => void }> = ({
         Search for your favourite film
       </Typography>
       <div className={classes.filterFormContainer}>
-        <FilterFilmsForm onSubmit={handleFiltersChange} disabled={isLoading} />
+        <FilterFilmsForm
+          onSubmit={handleFiltersChange}
+          onReset={handleFiltersReset}
+          shouldResetOnClearing={searchApplied}
+        />
       </div>
       <div className={classes.filmsContainer}>
         <Films

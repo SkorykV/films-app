@@ -3,9 +3,11 @@ import {
   IsArray,
   IsIn,
   IsInt,
+  IsNotEmpty,
   Length,
   Max,
   Min,
+  ValidateIf,
   ValidateNested,
 } from 'class-validator';
 
@@ -45,7 +47,15 @@ export class CreateFilmWithActorsDTO extends CreateFilmDTO {
 }
 
 export class FilterFilmsDTO {
+  @ValidateIf(o => !o.actorName)
+  @IsNotEmpty({
+    message: 'title or actor name should not be empty',
+  })
   title!: string;
 
+  @ValidateIf(o => !o.title)
+  @IsNotEmpty({
+    message: 'title or actor name should not be empty',
+  })
   actorName!: string;
 }
