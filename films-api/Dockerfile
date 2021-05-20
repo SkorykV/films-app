@@ -10,6 +10,8 @@ EXPOSE ${API_PORT}
 
 COPY package.json package-lock.json ./
 
-RUN npm install --only=prod && npm cache clean --force
+RUN npm install && npm cache clean --force
+
+COPY . .
 
 CMD ["npm", "run", "start:dev"]

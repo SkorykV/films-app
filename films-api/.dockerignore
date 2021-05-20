@@ -2,7 +2,6 @@
 */dist
 */.nyc_output
 
-*/.env*
-*/package.json
-*/package-lock.json
-
+*.env*
+.gitignore
+.prettierrc

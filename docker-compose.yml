@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   database:
@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - 'pgdata:/var/lib/postgresql/data'
+      - "pgdata:/var/lib/postgresql/data"
 
   api:
     build:
@@ -22,11 +22,13 @@ services:
     environment:
       DB_HOSTNAME: database
     ports:
-      - '3000:${API_PORT:-4000}'
+      - "4000:${API_PORT:-4000}"
     volumes:
       - type: bind
-        source: ./films-api
-        target: /films-api
+        source: ./films-api/src
+        target: /films-api/src
+    depends_on:
+      - database
 
   frontend:
     build:
@@ -36,15 +38,17 @@ services:
         UI_PORT: ${UI_PORT:-3000}
     image: films-ui
     environment:
-      API_HOST: 'api:${API_PORT:-4000}'
+      API_HOST: "api:${API_PORT:-4000}"
       #react expects PORT variable name to setup app on
       PORT: ${UI_PORT:-3000}
     ports:
-      - '8080:${UI_PORT:-3000}'
+      - "8080:${UI_PORT:-3000}"
     volumes:
       - type: bind
-        source: ./films-ui
-        target: /films-ui
+        source: ./films-ui/src
+        target: /films-ui/src
+    depends_on:
+      - api
 
 volumes:
   pgdata:
